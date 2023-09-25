@@ -42,6 +42,44 @@
                         </div>
                     @enderror
                 </div>
+
+             
+                <div class="mb-3">
+                    <label class="form-label d-block">Technology</label>
+                    @foreach ($technologies as $technology)
+                        <div class="form-check form-check-inline">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="technologies[]"
+                                id="technology-{{ $technology->id }}"
+                                value="{{ $technology->id }}"
+                                @if (
+                                    $errors->any()
+                                )
+                                    {{-- Qui ci entro solo quando ho già inviato il form, ma la validazione non è andata a buon fine --}}
+
+                                    @if (
+                                        in_array(
+                                            $technology->id,
+                                            old('technologies', [])
+                                        )
+                                    )
+                                        checked
+                                    @endif
+                                @elseif (
+                                    // $tag->id compare in quelli precedentemente associati al post
+                                    $project->technologies->contains($technology)
+                                )
+                                    checked
+                                @endif
+                                >
+                            <label class="form-check-label" for="technology-{{ $technology->id }}">
+                                {{ $technology->title }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
     
                 <div class="text-center">
                     <button type="submit" class="btn btn-danger w-25">

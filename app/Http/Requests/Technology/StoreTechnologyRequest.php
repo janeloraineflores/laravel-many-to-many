@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Technology;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 //Helpers
 use Illuminate\Support\Facades\Auth;
 
-class StoreProjectRequest extends FormRequest
+class StoreTechnologyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' =>'required|max:100',
-            'content' => 'required',
+            'title' => 'required|max: 255'
         ];
     }
 }

@@ -3,61 +3,57 @@
 @section('page-title', $project->title)
 
 @section('main-content')
-<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h1>
+                            {{ $project->title }}
+                        </h1>
+                        <h6>
+                            Slug: {{ $project->slug }}
+                        </h6>
+                        <div>
 
-    <div class="row py-5">
-        <div class="col-12 bg-light">
-            <h1>
-                {{ $project->title }}
-            </h1>
+                            <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="btn btn-warning">
+                                Modifica
+                            </a>
+                            <form class="d-inline-block" action="{{ route('admin.projects.destroy', ['project' => $project->id]) }}" method="project" onsubmit="return confirm('Sei sicuro di voler eliminare questo project?');">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger">
+                                    Elimina
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <p>
+                        {{ $project->content }}
+                    </p>
+
+                    <hr>
+
+                    <div>
+                        <h3>
+                            Tags:
+                        </h3>
+                        <div>
+                            @forelse ($project->technologies as $technology)
+                                <span class="badge rounded-pill text-bg-primary">
+                                    {{ $technology->title }}
+                                </span>
+                            @empty
+                                No technology associated with this project
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Slug</th>
-                <th scope="col">Content</th>
-                <th scope="col">Actions</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">
-                    {{ $project->id }}
-                </th>
-                <td>
-                    {{ $project->title }}
-                </td>
-                <td>
-                    {{ $project->slug }}
-                </td>
-                <td>
-                    {{ $project->content }}
-                </td>
-                <td>
-                    <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="btn btn-danger">
-                        Update
-                    </a>
-                </td>
-                <td>
-                    <form
-                        action="{{ route('admin.projects.destroy', ['project' => $project->id]) }}"
-                        method="POST"
-                        onsubmit="return confirm('Sei sicuro di voler cancellare questo elemento?');">
-                        @csrf
-                        @method('DELETE')
-                        
-                        <button type="submit" class="btn btn-warning">
-                            Delete
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-      </table>
-</div>
 @endsection

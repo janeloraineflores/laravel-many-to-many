@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StoreProjectRequest;
-use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Requests\Project\StoreProjectRequest;
+use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
 
 //Models
 use App\Models\Project;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -26,7 +27,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $technologies = Technology::all();
+
+        return view('admin.projects.create', compact('technologies'));
     }
 
     /**
@@ -37,11 +40,18 @@ class ProjectController extends Controller
         $formData = $request->validated();
 
         $project = Project::create([
-
             'title' => $formData['title'],
             'slug' => str()->slug($formData['title']),
-            'content' =>$formData['content'],
+            'content' => $formData['content'],
         ]);
+
+        if (isset($formData['technologies'])) {
+            foreach ($formData['technologies'] as $technologyId) {
+                                                //  post_id  |  tag_id
+                                                // ----------+---------
+                $project->technologies()->attach($technologyId);  // $post->id |  $tagId
+            }
+        }
 
         return redirect()->route('admin.projects.show', compact('project'));
     }
@@ -59,7 +69,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $technologies = Technology::all();
+
+        return view('admin.projects.edit', compact('project', 'technologies'));
     }
 
     /**
@@ -67,14 +79,21 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+       
         $formData = $request->validated();
 
         $project->update([
-
             'title' => $formData['title'],
             'slug' => str()->slug($formData['title']),
-            'content' =>$formData['content'],
+            'content' => $formData['content'],
         ]);
+
+        if (isset($formData['technologies'])) {
+            $project->technologies()->sync($formData['technologies']);
+        }
+        else {
+            $project->technologies()->detach();
+        }
 
         return redirect()->route('admin.projects.show', compact('project'));
     }

@@ -28,6 +28,33 @@
                         </div>
                     @enderror
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label d-block">Technology</label>
+                    @foreach ($technologies as $technology)
+                        <div class="form-check form-check-inline">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="technologies[]"
+                                id="technology-{{ $technology->id }}"
+                                value="{{ $technology->id }}"
+                                @if (
+                                    in_array(
+                                        $technology->id,
+                                        old('technologies', [])
+                                    )
+                                )
+                                    checked
+                                @endif
+                                >
+                            <label class="form-check-label" for="technology-{{ $technology->id }}">
+                                {{ $technology->title }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+
                 <div class="text-center">
                     <button type="submit" class="btn btn-success w-25">
                         + Add

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Project;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,8 +25,10 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' =>'required|max:100',
+            'title' => 'required|max:255',
             'content' => 'required',
+            'technologies' => 'nullable|array',
+            'technologies.*' => 'exists:technologies,id',
         ];
     }
 }
