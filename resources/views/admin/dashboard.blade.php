@@ -8,10 +8,10 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-success">
-                        Sei loggato!
+                        You're logged in!
                     </h1>
                     <br>
-                    La dashboard è una pagina privata (protetta dal middleware)
+                    The dashboard is a private page (protected by middleware)
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@
                         Welcome!
                     </h1>
                     <br>
-                    La welcome page è una pagina pubblica (NON protetta)
+                    The welcome page is a public page (NOT protected)
                 </div>
             </div>
         </div>
