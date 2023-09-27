@@ -43,6 +43,7 @@ class ProjectController extends Controller
             'title' => $formData['title'],
             'slug' => str()->slug($formData['title']),
             'content' => $formData['content'],
+        
         ]);
 
         if (isset($formData['technologies'])) {

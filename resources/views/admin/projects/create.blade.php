@@ -7,7 +7,7 @@
     <div class="row py-5">
         <div class="col bg-light">
 
-            <form action="{{ route('admin.projects.store') }}" method="POST">
+            <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -28,6 +28,12 @@
                         </div>
                     @enderror
                 </div>
+
+                <div class="mb-3">
+                    <label for="cover_img" class="form-label">Cover Image</label>
+                    <input class="form-control" type="file" name="cover_img" accept="image/*">
+                </div>
+                  
 
                 <div class="mb-3">
                     <label class="form-label d-block">Technology</label>
